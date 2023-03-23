@@ -31,13 +31,18 @@ pub fn main() !void {
 
     try request.parse_wagi_env(arena.allocator());
 
-    response.content_type = "application/json";
+    response.content.type = "application/json";
     try response.send(stdout);
 
-    var env_map = try std.process.getEnvMap(arena.allocator());
-    try structs.jsonStringifyHashmap(env_map, .{
-        .whitespace = std.json.StringifyOptions.Whitespace{},
-    }, stdout);
-    try stdout.writeByte('\n');
-    // try structs.jsonDebug(request, stdout);
+    var env = try std.process.getEnvMap(arena.allocator());
+    const obj = .{
+        .env = structs.JsonMap(@TypeOf(env.hash_map)){ .map = env.hash_map },
+    };
+
+    // try std.json.stringify(obj, .{
+    //     .whitespace = std.json.StringifyOptions.Whitespace{},
+    // }, stdout);
+    // try stdout.writeByte('\n');
+
+    try structs.jsonDebug(obj, stdout);
 }

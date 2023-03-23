@@ -1,14 +1,15 @@
 pub const Response = @This();
 const std = @import("std");
-
-content_type: []const u8 = "text/html; charset=UTF-8",
 status: u32 = 200,
-content: []const u8 = "",
+content: Content = .{},
 
 pub fn send(self: *const Response, writer: std.fs.File.Writer) !void {
-    try writer.print("Content-Type: {s}\n", .{self.content_type});
+    try writer.print("Content-Type: {s}\n", .{self.content.type});
+    if (self.content.length != null) {
+        try writer.print("Content-Length: {d}\n", .{self.content.length.?});
+    }
     try writer.print("Status: {d}\n\n", .{self.status});
-    try writer.print("{s}", .{self.content});
+    try writer.writeAll(self.content.buffer);
 }
 
 pub const HTTPError = struct {
@@ -25,5 +26,16 @@ pub const HTTPError = struct {
         if (self.msg.len > 0) {
             try writer.print("Message: {d}\n", .{self.msg});
         }
+    }
+};
+
+pub const Content = struct {
+    buffer: []const u8 = &.{},
+    type: []const u8 = "text/html; charset=UTF-8",
+    length: ?usize = null,
+
+    pub fn set(self: *@This(), value: []const u8) void {
+        self.buffer = value;
+        self.length = value.len;
     }
 };

@@ -31,7 +31,17 @@ pub fn jsonDebug(obj: anytype, writer: anytype) !void {
     try writer.writeByte('\n');
 }
 
-pub fn jsonStringifyHashmap(self: anytype, options: std.json.StringifyOptions, out_stream: anytype) !void {
+pub fn JsonMap(comptime T: type) type {
+    return struct {
+        map: T,
+
+        pub fn jsonStringify(self: @This(), options: std.json.StringifyOptions, out_stream: anytype) !void {
+            return jsonStringifyMap(self.map, options, out_stream);
+        }
+    };
+}
+
+pub fn jsonStringifyMap(self: anytype, options: std.json.StringifyOptions, out_stream: anytype) !void {
     var env = self.iterator();
     try out_stream.writeByte('{');
     var child_options = options;
