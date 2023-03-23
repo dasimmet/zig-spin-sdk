@@ -1,6 +1,6 @@
 const std = @import("std");
 
-pub const Method = enum{
+pub const Method = enum {
     GET,
     POST,
     pub fn jsonStringify(self: @This(), options: std.json.StringifyOptions, out_stream: anytype) !void {
@@ -8,17 +8,17 @@ pub const Method = enum{
     }
 };
 
-pub const Content = struct{
+pub const Content = struct {
     length: ?usize = null,
     type: ?[]const u8 = null,
 };
 
-pub const Server = struct{
+pub const Server = struct {
     name: ?[]const u8 = null,
     port: ?u32 = null,
 };
 
-pub const Client = struct{
+pub const Client = struct {
     name: ?[]const u8 = null,
     address: ?[]const u8 = null,
     port: ?u32 = null,
@@ -48,7 +48,6 @@ pub fn jsonStringifyHashmap(self: anytype, options: std.json.StringifyOptions, o
         if (child_options.whitespace) |child_whitespace| {
             try child_whitespace.outputIndent(out_stream);
         }
-        // try stderr.print("{s}={s}\n", .{it.key_ptr.*, it.value_ptr.*});
         try std.json.encodeJsonString(it.key_ptr.*, options, out_stream);
         try out_stream.writeByte(':');
         try std.json.stringify(it.value_ptr.*, child_options, out_stream);
@@ -64,7 +63,7 @@ pub fn jsonStringifyHashmap(self: anytype, options: std.json.StringifyOptions, o
 fn jsonStringifyEnum(self: anytype, options: std.json.StringifyOptions, out_stream: anytype) !void {
     _ = options;
     inline for (@typeInfo(@TypeOf(self)).Enum.fields) |f| {
-        if (f.value == @enumToInt(self)) return out_stream.writeAll("\""++f.name++"\"");
+        if (f.value == @enumToInt(self)) return out_stream.writeAll("\"" ++ f.name ++ "\"");
     }
-    @panic("Enum Value not found for: "++@typeName(@This()));
+    @panic("Enum Value not found for: " ++ @typeName(@This()));
 }

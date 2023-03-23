@@ -1,4 +1,3 @@
-
 pub const Response = @This();
 const std = @import("std");
 
@@ -12,8 +11,7 @@ pub fn send(self: *const Response, writer: std.fs.File.Writer) !void {
     try writer.print("{s}", .{self.content});
 }
 
-
-pub const HTTPError = struct{
+pub const HTTPError = struct {
     msg: []const u8 = "",
     status: u32 = 404,
 
