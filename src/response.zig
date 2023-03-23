@@ -6,9 +6,10 @@ content_type: []const u8 = "text/html; charset=UTF-8",
 status: u32 = 200,
 content: []const u8 = "",
 
-pub fn send(self: *const Response, writer: *std.fs.File.Writer) !void {
+pub fn send(self: *const Response, writer: std.fs.File.Writer) !void {
     try writer.print("Content-Type: {s}\n", .{self.content_type});
     try writer.print("Status: {d}\n\n", .{self.status});
+    try writer.print("{s}", .{self.content});
 }
 
 

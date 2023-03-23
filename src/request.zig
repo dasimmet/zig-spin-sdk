@@ -7,11 +7,17 @@ var stdout = std.io.getStdOut().writer();
 var stderr = std.io.getStdErr().writer();
 var stdin = std.io.getStdIn().reader();
 
-method: structs.Method = .GET,
-content_length: usize = 0,
+client: structs.Client = .{},
+content: structs.Content = .{},
 debug: bool = false,
+method: structs.Method = .GET,
+path: ?[]const u8 = null,
+query: ?[]const u8 = null,
+route: ?[]const u8 = null,
+server: structs.Server = .{},
+url: ?[]const u8 = null,
 
-pub fn parse_env(self: *Request, allocator: std.mem.Allocator) !void {
+pub fn parse_wagi_env(self: *Request, allocator: std.mem.Allocator) !void {
 
     if (self.debug){
         try stderr.print("Env:\n", .{});
@@ -31,7 +37,26 @@ pub fn parse_env(self: *Request, allocator: std.mem.Allocator) !void {
                 }
             }
         } else if (std.mem.eql(u8, it.key_ptr.*, "HTTP_CONTENT_LENGTH")) {
-            self.content_length = try std.fmt.parseUnsigned(usize, it.value_ptr.*, 10);
+            self.content.length = try std.fmt.parseUnsigned(usize, it.value_ptr.*, 10);
+        } else if (std.mem.eql(u8, it.key_ptr.*, "HTTP_CONTENT_TYPE")) {
+            self.content.type = it.value_ptr.*;
+        } else if (std.mem.eql(u8, it.key_ptr.*, "SERVER_NAME")) {
+            self.server.name  = it.value_ptr.*;
+        } else if (std.mem.eql(u8, it.key_ptr.*, "SERVER_PORT")) {
+            self.server.port = try std.fmt.parseUnsigned(usize, it.value_ptr.*, 10);
+        } else if (std.mem.eql(u8, it.key_ptr.*, "REMOTE_ADDR")) {
+            self.client.address = it.value_ptr.*;
+        } else if (std.mem.eql(u8, it.key_ptr.*, "REMOTE_HOST")) {
+            self.client.name = it.value_ptr.*;
+        } else if (std.mem.eql(u8, it.key_ptr.*, "QUERY_STRING")) {
+            self.query = it.value_ptr.*;
+        } else if (std.mem.eql(u8, it.key_ptr.*, "PATH_TRANSLATED")) {
+            self.path = it.value_ptr.*;
+        } else if (std.mem.eql(u8, it.key_ptr.*, "X_COMPONENT_ROUTE")) {
+            self.route = it.value_ptr.*;
+        } else if (std.mem.eql(u8, it.key_ptr.*, "X_FULL_URL")) {
+            self.url = it.value_ptr.*;
         }
+        
     }
 }
