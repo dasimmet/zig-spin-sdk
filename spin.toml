@@ -1,0 +1,17 @@
+spin_manifest_version = "1"
+authors = ["Tobias Simetsreiter <tobias.simetsreiter@meliot.de>"]
+description = ""
+name = "spinapp"
+trigger = { type = "http", base = "/" }
+version = "0.1.0"
+
+[[component]]
+id = "spinapp"
+source = "zig-out/bin/spinapp.wasm"
+key_value_stores = [ "default" ]
+[component.trigger]
+route = "/..."
+executor = { type = "wagi" }
+[component.build]
+# command = "zig build-exe -O ReleaseSmall -target wasm32-wasi src/main.zig"
+command = "zig build"
