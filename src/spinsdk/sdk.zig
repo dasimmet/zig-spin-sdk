@@ -2,8 +2,14 @@
 pub const SDK = @This();
 const std = @import("std");
 
+const c_sources = .{
+    "key-value",
+};
+
 pub const c = @cImport({
-    @cInclude("key-value.h");
+    inline for (c_sources) |f| {
+        @cInclude(f ++ ".h");
+    }
 });
 
 pub const KVStore = struct{
@@ -69,6 +75,9 @@ pub const KVStore = struct{
 };
 
 pub fn link(exe: *std.Build.CompileStep) void {
-    exe.addIncludePath(std.Build.FileSource.relative("src/spinsdk/").path);
-    exe.addCSourceFile(std.Build.FileSource.relative("src/spinsdk/key-value.c").path, &.{});
+    const dir = comptime std.fs.path.dirname(@src().file).?;
+    exe.addIncludePath(dir);
+    inline for (c_sources) |f| {
+        exe.addCSourceFile(dir ++ "/" ++ f ++ ".c", &.{});
+    }
 }
