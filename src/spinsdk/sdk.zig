@@ -67,3 +67,8 @@ pub const KVStore = struct{
         }
     }
 };
+
+pub fn link(exe: *std.Build.CompileStep) void {
+    exe.addIncludePath(std.Build.FileSource.relative("src/spinsdk/").path);
+    exe.addCSourceFile(std.Build.FileSource.relative("src/spinsdk/key-value.c").path, &.{});
+}

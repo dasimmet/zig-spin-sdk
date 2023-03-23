@@ -1,5 +1,6 @@
 const std = @import("std");
 const builtin = @import("builtin");
+const sdk = @import("src/spinsdk/sdk.zig");
 
 pub fn build(b: *std.Build) !void {
     const target = .{
@@ -17,8 +18,7 @@ pub fn build(b: *std.Build) !void {
         .target=target,
         .optimize=optimize,
     });
-    exe.addIncludePath("src/spinsdk/");
-    exe.addCSourceFile("src/spinsdk/key-value.c", &.{});
+    sdk.link(exe);
     exe.linkLibC();
     exe.install();
 
