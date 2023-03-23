@@ -1,17 +1,29 @@
 pub const Response = @This();
 const std = @import("std");
+const structs = @import("struct.zig");
 status: u32 = 200,
-content: Content = .{},
+content: structs.Content = .{.Stream=.{}},
 
 pub fn send(self: *const Response, writer: std.fs.File.Writer) !void {
     try writer.print("Status: {d}\n", .{self.status});
-    try writer.print("Content-Type: {s}\n", .{self.content.type});
-    if (self.content.buffer != null) {
-        try writer.print("Content-Length: {d}\n", .{self.content.buffer.?.len});
+    switch (self.content) {
+        .Stream => {
+            try writer.print("Content-Type: {s}\n", .{self.content.Stream.type.?});
+
+        },
+        .String => {
+            try writer.print("Content-Type: {s}\n", .{self.content.String.type.?});
+            try writer.print("Content-Length: {d}\n", .{self.content.String.buffer.len});
+        },
     }
     try writer.writeByte('\n');
-    if (self.content.buffer != null) {
-        try writer.writeAll(self.content.buffer.?);
+    switch (self.content) {
+        .String => {
+            try writer.writeAll(self.content.String.buffer);
+        },
+        else => {},
+    }
+    if (self.content == structs.Content.String){
     }
 }
 
@@ -30,9 +42,4 @@ pub const HTTPError = struct {
             try writer.print("Message: {d}\n", .{self.msg});
         }
     }
-};
-
-pub const Content = struct {
-    buffer: ?[]const u8 = null,
-    type: []const u8 = "text/html; charset=UTF-8",
 };

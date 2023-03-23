@@ -1,10 +1,9 @@
-const std = @import("std");
-const sqlite = @import("sqlite");
-const structs = @import("struct.zig");
-const Request = @import("request.zig");
+const std =      @import("std");
+const structs =  @import("struct.zig");
+const json =     @import("json.zig");
+const Request =  @import("request.zig");
 const Response = @import("response.zig");
-const sdk = @import("spinsdk/sdk.zig");
-// const Method = struct_file.Method;
+// const sdk = @import("spinsdk/sdk.zig");
 
 var stdout = std.io.getStdOut().writer();
 var stderr = std.io.getStdErr().writer();
@@ -31,16 +30,20 @@ pub fn main() !void {
 
     try request.parse_wagi_env(arena.allocator());
 
-    response.content.type = "application/json";
+    response.content.Stream.type = "application/json";
+    // response.content = .{.String=.{
+    //     .buffer = "WOLOLO",
+    //     .type = response.content.Stream.type,
+    // }};
     // Sending response without buffer means we can stream json afterwards
     try response.send(stdout);
 
     var env = try std.process.getEnvMap(arena.allocator());
     const obj = .{
-        .env = structs.JsonMap(@TypeOf(env.hash_map)){ .map = env.hash_map },
+        .env = json.Map(@TypeOf(env.hash_map)){ .map = env.hash_map },
         .request = request,
         .response = response,
     };
 
-    try structs.jsonDebug(obj, stdout);
+    try json.Debug(obj, stdout);
 }
