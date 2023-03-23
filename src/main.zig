@@ -32,6 +32,7 @@ pub fn main() !void {
     try request.parse_wagi_env(arena.allocator());
 
     response.content.type = "application/json";
+    // Sending response without buffer means we can stream json afterwards
     try response.send(stdout);
 
     var env = try std.process.getEnvMap(arena.allocator());
@@ -40,11 +41,6 @@ pub fn main() !void {
         .request = request,
         .response = response,
     };
-
-    // try std.json.stringify(obj, .{
-    //     .whitespace = std.json.StringifyOptions.Whitespace{},
-    // }, stdout);
-    // try stdout.writeByte('\n');
 
     try structs.jsonDebug(obj, stdout);
 }

@@ -4,12 +4,15 @@ status: u32 = 200,
 content: Content = .{},
 
 pub fn send(self: *const Response, writer: std.fs.File.Writer) !void {
+    try writer.print("Status: {d}\n", .{self.status});
     try writer.print("Content-Type: {s}\n", .{self.content.type});
-    if (self.content.length != null) {
-        try writer.print("Content-Length: {d}\n", .{self.content.length.?});
+    if (self.content.buffer != null) {
+        try writer.print("Content-Length: {d}\n", .{self.content.buffer.?.len});
     }
-    try writer.print("Status: {d}\n\n", .{self.status});
-    try writer.writeAll(self.content.buffer);
+    try writer.writeByte('\n');
+    if (self.content.buffer != null) {
+        try writer.writeAll(self.content.buffer.?);
+    }
 }
 
 pub const HTTPError = struct {
@@ -30,12 +33,6 @@ pub const HTTPError = struct {
 };
 
 pub const Content = struct {
-    buffer: []const u8 = &.{},
+    buffer: ?[]const u8 = null,
     type: []const u8 = "text/html; charset=UTF-8",
-    length: ?usize = null,
-
-    pub fn set(self: *@This(), value: []const u8) void {
-        self.buffer = value;
-        self.length = value.len;
-    }
 };

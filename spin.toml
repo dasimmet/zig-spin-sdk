@@ -13,5 +13,4 @@ key_value_stores = [ "default" ]
 route = "/..."
 executor = { type = "wagi" }
 [component.build]
-# command = "zig build-exe -O ReleaseSmall -target wasm32-wasi src/main.zig"
-command = "zig build"
+command = "zig build -Doptimize=ReleaseFast"

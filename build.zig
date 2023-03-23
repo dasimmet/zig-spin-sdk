@@ -9,7 +9,7 @@ pub fn build(b: *std.Build) !void {
     };
     b.enable_wasmtime = true;
 
-    const optimize = b.standardOptimizeOption(.{ .preferred_optimize_mode=.ReleaseSafe });
+    const optimize = b.standardOptimizeOption(.{});
 
     const app_name = "spinapp";
     var exe: *std.build.CompileStep = b.addExecutable(.{
