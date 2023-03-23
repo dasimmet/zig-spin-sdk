@@ -37,6 +37,8 @@ pub fn main() !void {
     var env = try std.process.getEnvMap(arena.allocator());
     const obj = .{
         .env = structs.JsonMap(@TypeOf(env.hash_map)){ .map = env.hash_map },
+        .request = request,
+        .response = response,
     };
 
     // try std.json.stringify(obj, .{
