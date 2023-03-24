@@ -15,6 +15,7 @@ query: ?[]const u8 = null,
 route: ?[]const u8 = null,
 server: structs.Server = .{},
 url: ?[]const u8 = null,
+args: ?[][]const u8 = null,
 
 // pub fn jsonStringify(self: @This(), options: std.json.StringifyOptions, out_stream: anytype) !void {
 // }
@@ -24,6 +25,8 @@ pub fn parse_wagi_env(self: *Request, allocator: std.mem.Allocator) !void {
         try stderr.print("Env:\n", .{});
     }
     const env_map = try std.process.getEnvMap(allocator);
+
+    self.args = std.process.argsAlloc(allocator) catch null;
 
     var env = env_map.iterator();
     while (env.next()) |it| {
