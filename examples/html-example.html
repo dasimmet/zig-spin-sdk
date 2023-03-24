@@ -5,10 +5,15 @@
     <body>
         <h1>Hello World! from Zig Wasm</h1>
 
+        <p>
+            This is an Example on building an application on Fermyon Spin/Cloud using zig.
+            Zig CGI scripts are compiled to wasm32-wasi and assigned routes.
+            This page is served by the main route using zig @embedFile.
+        </p>
         <h2>Examples:</h2>
         <ul>
-            <li><a href="/example.json">JSON</a></li>
-            <li><a href="/key-value.json">Key Value Store</a></li>
+            <li><a href="/example.json">JSON Example</a> - Dumps out the Environment using <a href="https://github.com/ziglibs/tres">tres</a></a></li>
+            <li><a href="/key-value.json">Key Value Store</a> (not supported on cloud)</li>
         </ul>
 
         <h2>References:</h2>
