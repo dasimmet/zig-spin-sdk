@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include <key-value.h>
+#include "key-value.h"
 
 __attribute__((weak, export_name("canonical_abi_realloc")))
 void *canonical_abi_realloc(

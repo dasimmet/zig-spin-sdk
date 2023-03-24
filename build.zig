@@ -18,6 +18,9 @@ pub fn build(b: *std.Build) !void {
         .target = target,
         .optimize = optimize,
     });
+    const tres_module = b.dependency("tres", .{}).module("tres");
+    exe.addModule("tres", tres_module);
+
     sdk.link(exe);
     exe.linkLibC();
     exe.install();

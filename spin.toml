@@ -13,4 +13,4 @@ key_value_stores = [ "default" ]
 route = "/..."
 executor = { type = "wagi" }
 [component.build]
-command = "zig build -Doptimize=ReleaseFast"
+command = "zig build -Doptimize=ReleaseSmall"

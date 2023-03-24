@@ -3,7 +3,6 @@ const structs = @import("struct.zig");
 const json = @import("json.zig");
 const Request = @import("request.zig");
 const Response = @import("response.zig");
-// const sdk = @import("spinsdk/sdk.zig");
 
 var stdout = std.io.getStdOut().writer();
 var stderr = std.io.getStdErr().writer();
@@ -40,10 +39,10 @@ pub fn main() !void {
 
     var env = try std.process.getEnvMap(arena.allocator());
     const obj = .{
-        .env = json.Map(@TypeOf(env.hash_map)){ .map = env.hash_map },
+        .env = env.hash_map,
         .request = request,
         .response = response,
     };
 
-    try json.Debug(obj, stdout);
+    try json.Print(obj, stdout, true);
 }
