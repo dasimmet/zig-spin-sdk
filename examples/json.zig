@@ -18,6 +18,7 @@ pub fn main() !void {
         .env = env.hash_map,
         .request = spin.request,
         .response = spin.response,
+        .argv = try std.process.argsAlloc(arena.allocator()),
     };
 
     try spin.json.Print(obj, stdout, true);
