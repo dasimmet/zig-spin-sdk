@@ -12,7 +12,7 @@ pub fn main() !void {
 
     if (!std.mem.eql(u8, spin.request.path.?, "/index.html")) {
         // redirect to main page
-        stdout.writeAll("Location: /index.html\n") catch @panic("WOLOLO");
+        try stdout.writeAll("Location: /index.html\n");
         spin.response.status = 307;
     } else {
         spin.response.content = .{ .String = .{
