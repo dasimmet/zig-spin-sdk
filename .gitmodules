@@ -1,0 +1,3 @@
+[submodule "libs/spin"]
+	path = libs/spin
+	url = https://github.com/fermyon/spin.git
