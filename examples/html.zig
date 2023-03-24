@@ -10,9 +10,9 @@ pub fn main() !void {
 
     try spin.request.parse_wagi_env(arena.allocator());
 
-    if (spin.request.path != null and !std.mem.eql(u8, spin.request.path.?, "/index.html")) {
+    if (spin.request.path != null and !std.mem.eql(u8, spin.request.path.?, "/")) {
         // redirect to main page
-        try stdout.writeAll("Location: /index.html\n");
+        try stdout.writeAll("Location: /\n");
         spin.response.status = 307;
     } else {
         spin.response.content = .{ .String = .{
