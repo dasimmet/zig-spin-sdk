@@ -10,7 +10,7 @@ pub fn main() !void {
 
     try spin.request.parse_wagi_env(arena.allocator());
 
-    if (!std.mem.eql(u8, spin.request.path.?, "/index.html")) {
+    if (spin.request.path != null and !std.mem.eql(u8, spin.request.path.?, "/index.html")) {
         // redirect to main page
         try stdout.writeAll("Location: /index.html\n");
         spin.response.status = 307;
