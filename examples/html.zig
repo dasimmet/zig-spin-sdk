@@ -10,10 +10,15 @@ pub fn main() !void {
 
     try spin.request.parse_wagi_env(arena.allocator());
 
-    spin.response.content = .{ .String = .{
-        .buffer = @embedFile("html-example.html"),
-        .type = "text/html; charset=utf-8",
-    } };
-    // Sending response without buffer means we can stream json afterwards
+    if (!std.mem.eql(u8, spin.request.path.?, "/index.html")) {
+        // redirect to main page
+        stdout.writeAll("Location: /index.html\n") catch @panic("WOLOLO");
+        spin.response.status = 307;
+    } else {
+        spin.response.content = .{ .String = .{
+            .buffer = @embedFile("html-example.html"),
+            .type = "text/html; charset=utf-8",
+        } };
+    }
     try spin.response.send(stdout);
 }

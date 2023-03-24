@@ -7,8 +7,10 @@ content: structs.Content = .{ .Stream = .{} },
 pub fn send(self: *const Response, writer: std.fs.File.Writer) !void {
     try writer.print("Status: {d}\n", .{self.status});
     switch (self.content) {
-        .Stream => {
-            try writer.print("Content-Type: {s}\n", .{self.content.Stream.type.?});
+        .Stream => |c| {
+            if (c.type != null) {
+                try writer.print("Content-Type: {s}\n", .{c.type.?});
+            }
         },
         .String => {
             try writer.print("Content-Type: {s}\n", .{self.content.String.type.?});
