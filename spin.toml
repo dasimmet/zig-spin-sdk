@@ -6,15 +6,6 @@ trigger = { type = "http", base = "/" }
 version = "0.1.0"
 
 [[component]]
-id = "json"
-source = "zig-out/bin/json.wasm"
-[component.trigger]
-route = "/example.json"
-executor = { type = "wagi" }
-[component.build]
-command = "zig build json"
-
-[[component]]
 id = "html"
 source = "zig-out/bin/html.wasm"
 [component.trigger]
@@ -33,3 +24,12 @@ route = "/key-value.json"
 executor = { type = "wagi" }
 [component.build]
 command = "zig build key-value"
+
+[[component]]
+id = "json"
+source = "zig-out/bin/json.wasm"
+[component.trigger]
+route = "/example.json"
+executor = { type = "wagi" }
+[component.build]
+command = "zig build json"
