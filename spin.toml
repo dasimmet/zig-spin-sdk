@@ -6,11 +6,20 @@ trigger = { type = "http", base = "/" }
 version = "0.1.0"
 
 [[component]]
-id = "spinapp"
-source = "zig-out/bin/spinapp.wasm"
+id = "json"
+source = "zig-out/bin/json.wasm"
 key_value_stores = [ "default" ]
+[component.trigger]
+route = "/example.json"
+executor = { type = "wagi" }
+[component.build]
+command = "zig build json"
+
+[[component]]
+id = "html"
+source = "zig-out/bin/html.wasm"
 [component.trigger]
 route = "/..."
 executor = { type = "wagi" }
 [component.build]
-command = "zig build -Doptimize=ReleaseSmall"
+command = "zig build html"

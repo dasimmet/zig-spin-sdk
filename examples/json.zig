@@ -1,11 +1,10 @@
 const std = @import("std");
-const structs = @import("struct.zig");
 
 var stdout = std.io.getStdOut().writer();
 var stderr = std.io.getStdErr().writer();
 var stdin = std.io.getStdIn().reader();
 
-const spin = @import("spin.zig");
+const spin = @import("spin");
 
 pub fn main() !void {
     // request.debug = true;

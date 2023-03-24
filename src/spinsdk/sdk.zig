@@ -5,6 +5,7 @@ pub const OutboundHTTP = @import("wasi-outbound-http.zig");
 
 const c_sources = .{
     "key-value",
+    "spin-config",
     "wasi-outbound-http",
 };
 
