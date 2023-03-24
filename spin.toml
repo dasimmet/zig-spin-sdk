@@ -1,5 +1,5 @@
 spin_manifest_version = "1"
-authors = ["Tobias Simetsreiter <tobias.simetsreiter@meliot.de>"]
+authors = ["Tobias Simetsreiter <dasimet@gmail.com>"]
 description = ""
 name = "spinapp"
 trigger = { type = "http", base = "/" }
