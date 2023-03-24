@@ -2,6 +2,10 @@ const std = @import("std");
 const builtin = @import("builtin");
 const sdk = @import("src/spinsdk/sdk.zig");
 
+const modules = .{
+    "tres",
+};
+
 pub fn build(b: *std.Build) !void {
     const target = .{
         .cpu_arch = .wasm32,
@@ -18,8 +22,10 @@ pub fn build(b: *std.Build) !void {
         .target = target,
         .optimize = optimize,
     });
-    const tres_module = b.dependency("tres", .{}).module("tres");
-    exe.addModule("tres", tres_module);
+    inline for (modules) |mod| {
+        const b_module = b.dependency(mod, .{}).module(mod);
+        exe.addModule(mod, b_module);
+    }
 
     sdk.link(exe);
     exe.linkLibC();
