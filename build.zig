@@ -9,6 +9,9 @@ const examples = .{
     .{
         .name = "html",
     },
+    .{
+        .name = "key-value",
+    },
 };
 
 const modules = .{

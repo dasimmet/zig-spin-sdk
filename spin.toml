@@ -8,7 +8,6 @@ version = "0.1.0"
 [[component]]
 id = "json"
 source = "zig-out/bin/json.wasm"
-key_value_stores = [ "default" ]
 [component.trigger]
 route = "/example.json"
 executor = { type = "wagi" }
@@ -23,3 +22,14 @@ route = "/..."
 executor = { type = "wagi" }
 [component.build]
 command = "zig build html"
+
+
+[[component]]
+id = "key-value"
+source = "zig-out/bin/key-value.wasm"
+key_value_stores = [ "default" ]
+[component.trigger]
+route = "/key-value.json"
+executor = { type = "wagi" }
+[component.build]
+command = "zig build key-value"
