@@ -1,7 +1,7 @@
-const std =      @import("std");
-const structs =  @import("struct.zig");
-const json =     @import("json.zig");
-const Request =  @import("request.zig");
+const std = @import("std");
+const structs = @import("struct.zig");
+const json = @import("json.zig");
+const Request = @import("request.zig");
 const Response = @import("response.zig");
 // const sdk = @import("spinsdk/sdk.zig");
 

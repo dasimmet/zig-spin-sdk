@@ -10,11 +10,11 @@ pub const Method = enum {
 };
 
 pub const Content = union(enum) {
-    Stream: struct{
+    Stream: struct {
         type: ?[]const u8 = null,
         length: ?usize = null,
     },
-    String: struct{
+    String: struct {
         buffer: []const u8,
         type: ?[]const u8 = null,
     },

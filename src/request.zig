@@ -7,7 +7,7 @@ var stderr = std.io.getStdErr().writer();
 var stdin = std.io.getStdIn().reader();
 
 client: structs.Client = .{},
-content: structs.Content = .{.Stream=.{}},
+content: structs.Content = .{ .Stream = .{} },
 debug: bool = false,
 method: structs.Method = .GET,
 path: ?[]const u8 = null,
