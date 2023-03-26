@@ -47,7 +47,7 @@ pub fn parse_wagi_env(self: *Request, allocator: std.mem.Allocator) !void {
         } else if (std.mem.eql(u8, it.key_ptr.*, "SERVER_NAME")) {
             self.server.name = it.value_ptr.*;
         } else if (std.mem.eql(u8, it.key_ptr.*, "SERVER_PORT")) {
-            self.server.port = try std.fmt.parseUnsigned(usize, it.value_ptr.*, 10);
+            self.server.port = try std.fmt.parseUnsigned(u16, it.value_ptr.*, 10);
         } else if (std.mem.eql(u8, it.key_ptr.*, "REMOTE_ADDR")) {
             self.client.address = it.value_ptr.*;
         } else if (std.mem.eql(u8, it.key_ptr.*, "REMOTE_HOST")) {

@@ -22,7 +22,7 @@ pub const Content = union(enum) {
 
 pub const Server = struct {
     name: ?[]const u8 = null,
-    port: ?u32 = null,
+    port: ?u16 = null,
 };
 
 pub const Client = struct {
