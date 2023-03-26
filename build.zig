@@ -47,12 +47,14 @@ pub fn build(b: *std.Build) !void {
 
         sdk.link(exe);
         exe.linkLibC();
+        exe.rdynamic = true;
         exe.install();
 
         const exe_step = b.step(ex.name, "Build and install " ++ ex.name);
         exe_step.dependOn(&exe.install_step.?.step);
 
         const run = b.addRunArtifact(exe);
+        run.addArgs(b.args orelse &.{});
         const run_step = b.step("run-" ++ ex.name, "Run the app in wasmtime");
         run_step.dependOn(&run.step);
     }
