@@ -1,0 +1,4 @@
+let math = import("std.math");
+let pow = import("pow");
+
+return math.pi * pow.pow(2)

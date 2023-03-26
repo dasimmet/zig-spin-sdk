@@ -33,3 +33,13 @@ route = "/example.json"
 executor = { type = "wagi" }
 [component.build]
 command = "zig build json"
+
+
+[[component]]
+id = "bog"
+source = "zig-out/bin/bog.wasm"
+[component.trigger]
+route = "/bog.json"
+executor = { type = "wagi" }
+[component.build]
+command = "zig build bog"
