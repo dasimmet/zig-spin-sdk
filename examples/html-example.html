@@ -17,6 +17,28 @@
         </ul>
 
         <h2>References:</h2>
+        <script>
+            async function bog(){
+                console.log("asdasd");
+                const inp = document.getElementById("textin");
+                const res = await fetch("/bog.json",{
+                    method: "POST", 
+                    body: inp.value,
+                });
+
+                const it = await res.json()
+                if (it.result !== undefined){
+                    document.getElementById("textout").value = it.result;
+                } else {
+                    document.getElementById("textout").value = it.error;
+
+                }
+            }
+        </script>
+        <button onclick="bog()">BOG</button>
+        <textarea id="textin" name="Text1" cols="40" rows="5"></textarea>
+        <textarea id="textout" name="Text1" cols="40" rows="5"></textarea>
+        <h2>References:</h2>
         <ul>
             <li><a href="https://github.com/deislabs/wagi">WebAssembly Gateway Interface (WAGI)</a></li>
             <li><a href="https://github.com/dasimmet/zig-spin-sdk">Source Code on Github</a></li>
