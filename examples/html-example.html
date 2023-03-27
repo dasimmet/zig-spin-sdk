@@ -16,10 +16,9 @@
             <li><a href="/key-value.json">Key Value Store</a> (not supported on cloud)</li>
         </ul>
 
-        <h2>References:</h2>
+        <h2>Bog</h2>
         <script>
             async function bog(){
-                console.log("asdasd");
                 const inp = document.getElementById("textin");
                 const res = await fetch("/bog.json",{
                     method: "POST", 
@@ -35,9 +34,11 @@
                 }
             }
         </script>
-        <button onclick="bog()">BOG</button>
-        <textarea id="textin" name="Text1" cols="40" rows="5"></textarea>
-        <textarea id="textout" name="Text1" cols="40" rows="5"></textarea>
+        <div>
+            <button onclick="bog()">BOG</button>
+            <textarea id="textin" name="Text IN" cols="40" rows="5"></textarea>
+            <textarea id="textout" name="Text OUT" cols="40" rows="5"></textarea>
+        </div>
         <h2>References:</h2>
         <ul>
             <li><a href="https://github.com/deislabs/wagi">WebAssembly Gateway Interface (WAGI)</a></li>
