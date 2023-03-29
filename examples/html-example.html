@@ -12,35 +12,25 @@
         </p>
         <h2>Examples:</h2>
         <ul>
-            <li><a href="/example.json">JSON Example</a> - Dumps out the Environment using <a href="https://github.com/ziglibs/tres">tres</a></a></li>
-            <li><a href="/key-value.json">Key Value Store</a> (not supported on cloud)</li>
+            <li><a href="/example.json">JSON Example</a> - Dumps out the Environment using
+                <a href="https://github.com/ziglibs/tres">tres</a></a></li>
+            <li><a href="/key-value.json">Key Value Store</a>
+                (not supported on fermyon cloud but running spin manually)</a></li>
+            <li><a href="/bog.json">bog.json</a>
+                compiles and runs bog script from POST body on the server, returns result as json</li>
         </ul>
 
         <h2>Bog</h2>
-        <script>
-            async function bog(){
-                const inp = document.getElementById("textin");
-                const res = await fetch("/bog.json",{
-                    method: "POST", 
-                    body: inp.value,
-                });
-
-                const it = await res.json()
-                if (it.result !== undefined){
-                    document.getElementById("textout").value = it.result;
-                } else {
-                    document.getElementById("textout").value = it.error;
-
-                }
-            }
-        </script>
+        <script src="/index.js"></script>
         <div>
-            <button onclick="bog()">BOG</button>
             <textarea id="textin" name="Text IN" cols="40" rows="5"></textarea>
-            <textarea id="textout" name="Text OUT" cols="40" rows="5"></textarea>
+            <textarea id="textout" name="Text OUT" cols="40" rows="5" readonly></textarea>
+            <button onclick="bog()">BOG</button>
         </div>
         <h2>References:</h2>
         <ul>
+            
+            <li><a href="https://github.com/Vexu/bog">Bog Script Compiler by Vexu</a></li>
             <li><a href="https://github.com/deislabs/wagi">WebAssembly Gateway Interface (WAGI)</a></li>
             <li><a href="https://github.com/dasimmet/zig-spin-sdk">Source Code on Github</a></li>
             <li><a href="https://www.fermyon.com/">Built with Fermyon spin and hosted on Fermyon Cloud</a></li>

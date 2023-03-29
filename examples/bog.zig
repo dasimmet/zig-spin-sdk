@@ -26,7 +26,7 @@ pub fn main() !void {
         var vm = bog.Vm.init(allocator, .{});
         defer vm.deinit();
         try vm.addStdNoIo();
-        try vm.addPackage("pow", @import("bog-mod.zig"));
+        try vm.addPackage("bogmod", @import("bogmod.zig"));
 
         const source = try stdin.readAllAlloc(allocator, spin.request.content.Stream.length orelse 9999);
 
