@@ -79,10 +79,10 @@ pub fn build(b: *std.Build) !void {
             exe.linkLibC();
         }
         exe.rdynamic = true;
-        exe.install();
+        b.installArtifact(exe);
 
         const exe_step = b.step(ex.name, "Build and install " ++ ex.name);
-        exe_step.dependOn(&exe.install_step.?.step);
+        exe_step.dependOn(&b.addInstallArtifact(exe).step);
 
         const run = b.addRunArtifact(exe);
         run.addArgs(b.args orelse &.{});
